@@ -10,19 +10,45 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
 void MainWindow::checkBox_stateChanged()
 {
     QList<QCheckBox*> checkBoxes = ui->groupBox->findChildren<QCheckBox*>();
     QSet<QString> checkedCat;
+    bool all = false;
+
     foreach(const QCheckBox *value, checkBoxes)
+    {
+        if(value->whatsThis() == "all" && value->isChecked()){
+            all = true;
+            break;
+        }
+
         if(value->isChecked())
             checkedCat.insert(value->whatsThis());
+    }
 
+    if(all)
+    {
+        foreach(QCheckBox *value, checkBoxes)
+        {   if(value->whatsThis() != "all"){
+                value->setChecked(true);
+                value->setDisabled(true);
+            }
+        }
+    }else
+    {
+        foreach(QCheckBox *value, checkBoxes)
+        {   if(value->whatsThis() != "all"){
+                value->setDisabled(false);
+            }
+        }
+    }
 
     for (int i = 0; i < ui->listWidget->count(); ++i)
     {
         QListWidgetItem *item = ui->listWidget->item(i);
-        if(!checkedCat.contains(item->text()) && !checkedCat.contains("all"))
+        if(!checkedCat.contains(item->text()) && !all)
             item->setHidden(true);
         else
             item->setHidden(false);
@@ -107,6 +133,8 @@ void MainWindow::updateUi(QString* path) {
     foreach (const QString &value, dirs){
         QCheckBox *check = new QCheckBox(value, this);
         check->setWhatsThis(value);
+        check->setChecked(true);
+        check->setDisabled(true);
         connect(check, SIGNAL(stateChanged(int)), this, SLOT(checkBox_stateChanged()));
         ui->groupBox->layout()->addWidget(check);
     }
