@@ -15,7 +15,7 @@ CXX           = g++
 DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -march=x86-64 -mtune=generic -O2 -pipe -fstack-protector-strong -fno-plt -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -O2 -march=x86-64 -mtune=generic -O2 -pipe -fstack-protector-strong -fno-plt -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I../../project/Qt -I. -isystem /usr/include/qt -isystem /usr/include/qt/QtWidgets -isystem /usr/include/qt/QtGui -isystem /usr/include/qt/QtCore -I. -isystem /usr/include/libdrm -I. -I/usr/lib/qt/mkspecs/linux-g++
+INCPATH       = -I./ -I. -isystem /usr/include/qt -isystem /usr/include/qt/QtWidgets -isystem /usr/include/qt/QtGui -isystem /usr/include/qt/QtCore -I. -isystem /usr/include/libdrm -I. -I/usr/lib/qt/mkspecs/linux-g++
 QMAKE         = /usr/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -35,7 +35,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = thumbnail_browser1.0.0
-DISTDIR = /home/bern/uni/PAS/lab/build-thumbnail_browser-Desktop-Release/.tmp/thumbnail_browser1.0.0
+DISTDIR 	  = ./.tmp/thumbnail_browser1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-O1 -Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now
 LIBS          = $(SUBLIBS) -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
@@ -181,8 +181,8 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/exceptions.prf \
 		/usr/lib/qt/mkspecs/features/yacc.prf \
 		/usr/lib/qt/mkspecs/features/lex.prf \
-		../../project/Qt/thumbnail_browser.pro ../../project/Qt/mainwindow.h ../../project/Qt/main.cpp \
-		../../project/Qt/mainwindow.cpp
+		./thumbnail_browser.pro ./mainwindow.h ./main.cpp \
+		./mainwindow.cpp
 QMAKE_TARGET  = thumbnail_browser
 DESTDIR       = 
 TARGET        = thumbnail_browser
@@ -194,7 +194,7 @@ first: all
 $(TARGET): ui_mainwindow.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
-Makefile: ../../project/Qt/thumbnail_browser.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/qt/mkspecs/features/spec_pre.prf \
+Makefile: ./thumbnail_browser.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/common/unix.conf \
 		/usr/lib/qt/mkspecs/common/linux.conf \
 		/usr/lib/qt/mkspecs/common/sanitize.conf \
@@ -320,11 +320,11 @@ Makefile: ../../project/Qt/thumbnail_browser.pro /usr/lib/qt/mkspecs/linux-g++/q
 		/usr/lib/qt/mkspecs/features/exceptions.prf \
 		/usr/lib/qt/mkspecs/features/yacc.prf \
 		/usr/lib/qt/mkspecs/features/lex.prf \
-		../../project/Qt/thumbnail_browser.pro \
+		./thumbnail_browser.pro \
 		/usr/lib/libQt5Widgets.prl \
 		/usr/lib/libQt5Gui.prl \
 		/usr/lib/libQt5Core.prl
-	$(QMAKE) -o Makefile ../../project/Qt/thumbnail_browser.pro -spec linux-g++
+	$(QMAKE) -o Makefile ./thumbnail_browser.pro -spec linux-g++
 /usr/lib/qt/mkspecs/features/spec_pre.prf:
 /usr/lib/qt/mkspecs/common/unix.conf:
 /usr/lib/qt/mkspecs/common/linux.conf:
@@ -451,12 +451,12 @@ Makefile: ../../project/Qt/thumbnail_browser.pro /usr/lib/qt/mkspecs/linux-g++/q
 /usr/lib/qt/mkspecs/features/exceptions.prf:
 /usr/lib/qt/mkspecs/features/yacc.prf:
 /usr/lib/qt/mkspecs/features/lex.prf:
-../../project/Qt/thumbnail_browser.pro:
+./thumbnail_browser.pro:
 /usr/lib/libQt5Widgets.prl:
 /usr/lib/libQt5Gui.prl:
 /usr/lib/libQt5Core.prl:
 qmake: FORCE
-	@$(QMAKE) -o Makefile ../../project/Qt/thumbnail_browser.pro -spec linux-g++
+	@$(QMAKE) -o Makefile ./thumbnail_browser.pro -spec linux-g++
 
 qmake_all: FORCE
 
@@ -470,9 +470,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../../project/Qt/mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../../project/Qt/main.cpp ../../project/Qt/mainwindow.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../../project/Qt/mainwindow.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ./mainwindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents ./main.cpp ./mainwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ./mainwindow.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -507,10 +507,10 @@ moc_predefs.h: /usr/lib/qt/mkspecs/features/data/dummy.cpp
 compiler_moc_header_make_all: moc_mainwindow.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_mainwindow.cpp
-moc_mainwindow.cpp: ../../project/Qt/mainwindow.h \
+moc_mainwindow.cpp: ./mainwindow.h \
 		moc_predefs.h \
 		/usr/bin/moc
-	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/bern/uni/PAS/project/Qt -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/7.3.0 -I/usr/include/c++/7.3.0/x86_64-pc-linux-gnu -I/usr/include/c++/7.3.0/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/include-fixed -I/usr/include ../../project/Qt/mainwindow.h -o moc_mainwindow.cpp
+	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/bern/uni/PAS/project/Qt -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/7.3.0 -I/usr/include/c++/7.3.0/x86_64-pc-linux-gnu -I/usr/include/c++/7.3.0/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/include-fixed -I/usr/include ./mainwindow.h -o moc_mainwindow.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -519,9 +519,9 @@ compiler_moc_source_clean:
 compiler_uic_make_all: ui_mainwindow.h
 compiler_uic_clean:
 	-$(DEL_FILE) ui_mainwindow.h
-ui_mainwindow.h: ../../project/Qt/mainwindow.ui \
+ui_mainwindow.h: ./mainwindow.ui \
 		/usr/bin/uic
-	/usr/bin/uic ../../project/Qt/mainwindow.ui -o ui_mainwindow.h
+	/usr/bin/uic ./mainwindow.ui -o ui_mainwindow.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -533,12 +533,12 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 
 ####### Compile
 
-main.o: ../../project/Qt/main.cpp ../../project/Qt/mainwindow.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../../project/Qt/main.cpp
+main.o: ./main.cpp ./mainwindow.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ./main.cpp
 
-mainwindow.o: ../../project/Qt/mainwindow.cpp ../../project/Qt/mainwindow.h \
+mainwindow.o: ./mainwindow.cpp ./mainwindow.h \
 		ui_mainwindow.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../../project/Qt/mainwindow.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ./mainwindow.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

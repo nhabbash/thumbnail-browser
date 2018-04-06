@@ -81,7 +81,7 @@ void MainWindow::on_pushButton_clicked()
 }
 
 void MainWindow::updateUi(QString* path) {
-    QDirIterator it(*path, QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+    QDirIterator it(*path, QDir::Files | QDir::Dirs | QDir::NoDotDot, QDirIterator::Subdirectories);
     QSet<QString> dirs;
     QSet<QString> pics;
     QSet<QString> acceptedFiles;
@@ -91,7 +91,7 @@ void MainWindow::updateUi(QString* path) {
 
     while(it.hasNext())
     {
-        if(it.fileInfo().isDir())
+        if(it.fileInfo().isDir() && it.fileInfo().fileName() != ".")
             dirs.insert(it.fileInfo().fileName());
         else if(acceptedFiles.contains(it.fileInfo().completeSuffix()))
             pics.insert(it.fileInfo().canonicalFilePath());
